@@ -1,0 +1,50 @@
+steps:
+- id: 'tf validate'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      echo "********** TERRAFORM VALIDATE **********"
+      echo "*******     Syntax Validation    *******"
+      echo "****************************************"
+      terraform fmt -recursive
+      terraform init -backend=false
+      terraform validate .
+
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      echo "********** TERRAFORM INIT **********"
+      echo "******* Initialize Providers *******"
+      echo "************************************"
+      terraform init
+
+# [START tf-plan]
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      echo "********** TERRAFORM PLAN **********"
+      echo "*******        tf plan       *******"
+      echo "************************************"
+      terraform plan
+# [END tf-plan]
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+      echo "********** TERRAFORM APPLY **********"
+      echo "*******         tf apply      *******"
+      echo "*************************************"
+      terraform apply -auto-approve
+# [END tf-apply]
